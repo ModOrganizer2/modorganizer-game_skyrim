@@ -14,8 +14,7 @@ public:
     SkyrimGamePlugins(MOBase::IOrganizer *organizer);
 
 protected:
-    virtual bool readPluginList(MOBase::IPluginList *pluginList,
-        bool useLoadOrder) override;
+    virtual QStringList readPluginList(MOBase::IPluginList *pluginList) override;
 
 private:
     std::map<QString, QByteArray> m_LastSaveHash;
