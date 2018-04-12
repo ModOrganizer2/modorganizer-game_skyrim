@@ -22,8 +22,7 @@ SkyrimGamePlugins::SkyrimGamePlugins(IOrganizer *organizer)
     m_LocalCodec = QTextCodec::codecForName("Windows-1252");
 }
 
-bool SkyrimGamePlugins::readPluginList(MOBase::IPluginList *pluginList,
-    bool useLoadOrder)
+QStringList SkyrimGamePlugins::readPluginList(MOBase::IPluginList *pluginList)
 {
     QStringList plugins = pluginList->pluginNames();
     QStringList primaryPlugins = organizer()->managedGame()->primaryPlugins();
@@ -59,6 +58,7 @@ bool SkyrimGamePlugins::readPluginList(MOBase::IPluginList *pluginList,
         pluginsTxtExists = false;
     }
 
+    QStringList disabledPlugins;
     if (pluginsTxtExists) {
         while (!file.atEnd()) {
             QByteArray line = file.readLine();
@@ -69,6 +69,7 @@ bool SkyrimGamePlugins::readPluginList(MOBase::IPluginList *pluginList,
             if (pluginName.size() > 0) {
                 pluginList->setState(pluginName, IPluginList::STATE_ACTIVE);
                 plugins.removeAll(pluginName);
+                disabledPlugins.append(pluginName);
                 loadOrder.append(pluginName);
             }
         }
@@ -85,9 +86,5 @@ bool SkyrimGamePlugins::readPluginList(MOBase::IPluginList *pluginList,
         }
     }
 
-    if (useLoadOrder) {
-        pluginList->setLoadOrder(loadOrder);
-    }
-
-    return true;
+    return loadOrder + disabledPlugins;
 }
