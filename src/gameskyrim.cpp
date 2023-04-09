@@ -62,14 +62,11 @@ QString GameSkyrim::gameName() const
 QList<ExecutableInfo> GameSkyrim::executables() const
 {
   return QList<ExecutableInfo>()
-      << ExecutableInfo("SKSE", findInGameFolder(feature<ScriptExtender>()->loaderName()))
-      << ExecutableInfo("SBW", findInGameFolder("SBW.exe"))
-      << ExecutableInfo("Skyrim", findInGameFolder(binaryName()))
-      << ExecutableInfo("Skyrim Launcher", findInGameFolder(getLauncherName()))
-      << ExecutableInfo("BOSS", findInGameFolder("BOSS/BOSS.exe"))
-      << ExecutableInfo("LOOT", QFileInfo(getLootPath())).withArgument("--game=\"Skyrim\"")
-      << ExecutableInfo("Creation Kit", findInGameFolder("CreationKit.exe")).withSteamAppId("202480")
-  ;
+    << ExecutableInfo("SKSE", findInGameFolder(feature<ScriptExtender>()->loaderName()))
+    << ExecutableInfo("Skyrim", findInGameFolder(binaryName()))
+    << ExecutableInfo("Skyrim Launcher", findInGameFolder(getLauncherName()))
+    << ExecutableInfo("Creation Kit", findInGameFolder("CreationKit.exe")).withSteamAppId("202480")
+    << ExecutableInfo("LOOT", QFileInfo(getLootPath())).withArgument("--game=\"Skyrim\"");
 }
 
 QList<ExecutableForcedLoadSetting> GameSkyrim::executableForcedLoads() const
